@@ -2,38 +2,47 @@
 
 ## Project Overview
 
-Customer satisfaction is a crucial metric for evaluating the quality of customer support services in e-commerce platforms. Organizations handle thousands of customer interactions daily through different communication channels. Understanding and predicting customer satisfaction helps businesses improve service quality and customer experience.
+Customer satisfaction is a key indicator of service quality in e-commerce platforms. Companies receive thousands of customer support requests every day related to product issues, delivery delays, payment problems, and order tracking. Predicting customer satisfaction helps organizations understand service performance and improve customer experience.
 
-This project focuses on predicting **Customer Satisfaction Scores (CSAT)** using customer support interaction data. The model analyzes various operational parameters such as communication channel, issue category, agent information, and support handling details to estimate customer satisfaction levels.
+This project focuses on predicting **Customer Satisfaction Scores (CSAT)** using customer support interaction data. A **Deep Learning model based on Artificial Neural Networks (ANN)** was developed to learn patterns from customer support interactions and estimate satisfaction levels.
 
-A **Deep Learning model using Artificial Neural Networks (ANN)** was implemented to learn patterns from historical customer support data and predict CSAT scores.
+The project also includes a **Streamlit-based web application** that allows users to input interaction details and obtain predicted CSAT scores in real time.
 
 ---
 
 ## Objectives
 
 * Analyze customer support interaction data.
-* Identify factors influencing customer satisfaction.
-* Build a predictive model using Artificial Neural Networks.
-* Evaluate model performance using appropriate metrics.
-* Deploy the trained model locally using a Streamlit web application.
+* Identify key factors influencing customer satisfaction.
+* Develop a deep learning model for CSAT prediction.
+* Evaluate the model using appropriate performance metrics.
+* Deploy the trained model using a Streamlit web application.
 
 ---
 
-## Dataset Description
+## Dataset
 
-The dataset contains customer support interaction records with multiple features such as:
+The dataset used in this project contains customer support interaction records from an e-commerce platform.
 
-* Communication channel
-* Issue category
+Each record represents a customer support interaction and includes features such as:
+
+* Channel Name
+* Category
 * Sub-category
-* Agent details
-* Supervisor and manager information
-* Tenure bucket
-* Agent shift
+* Agent Name
+* Supervisor
+* Manager
+* Tenure Bucket
+* Agent Shift
 * Customer Satisfaction Score (CSAT)
 
-Each record represents a customer support interaction and the satisfaction score provided after the interaction.
+Dataset location in repository:
+
+```
+data/eCommerce_Customer_support_data.csv
+```
+
+The notebook automatically detects the dataset path if the file is placed in the `data/` directory or the project root.
 
 ---
 
@@ -41,31 +50,43 @@ Each record represents a customer support interaction and the satisfaction score
 
 ### 1. Data Exploration
 
-Initial data analysis was performed to understand dataset structure, including:
+Initial data analysis was performed to understand the dataset structure, including:
 
-* Dataset shape
-* Column information
+* Dataset shape and size
+* Column descriptions
 * Missing value analysis
 * Distribution of CSAT scores
 
+---
+
 ### 2. Data Preprocessing
 
-Data preprocessing steps included:
+The preprocessing pipeline includes:
 
 * Handling missing values
 * Removing irrelevant columns
-* Label encoding categorical features
+* Label encoding categorical variables
 * Feature scaling using **StandardScaler**
+
+---
 
 ### 3. Model Development
 
-An **Artificial Neural Network (ANN)** model was implemented using TensorFlow/Keras with the following architecture:
+An **Artificial Neural Network (ANN)** was implemented using TensorFlow/Keras.
 
-* Input Layer
-* Dense Layer (64 neurons, ReLU)
-* Dense Layer (32 neurons, ReLU)
-* Dense Layer (16 neurons, ReLU)
-* Output Layer (1 neuron)
+Model Architecture:
+
+```
+Input Layer
+Dense Layer (64 neurons, ReLU)
+Dense Layer (32 neurons, ReLU)
+Dense Layer (16 neurons, ReLU)
+Output Layer (1 neuron)
+```
+
+This architecture allows the model to capture nonlinear relationships between interaction features and customer satisfaction scores.
+
+---
 
 ### 4. Model Training
 
@@ -74,25 +95,36 @@ The model was trained using:
 * Optimizer: Adam
 * Loss Function: Mean Squared Error (MSE)
 * Evaluation Metric: Mean Absolute Error (MAE)
+* Epochs: 20
+* Batch Size: 32
+* Validation Split: 0.2
+
+---
 
 ### 5. Model Evaluation
 
-The model achieved:
+Model performance on the test dataset:
 
-* **Test Loss (MSE): ~1.84**
-* **Test MAE: ~0.99**
+```
+Test Loss (MSE): ~1.84
+Test MAE: ~0.99
+```
 
-This indicates that the predicted CSAT score differs from the actual value by approximately **1 point on average**, which is reasonable for a CSAT scale ranging from 1 to 5.
+This indicates that the predicted CSAT scores differ from the actual scores by approximately **one point on average** on a scale of **1–5**, which represents good predictive performance.
+
+---
 
 ### 6. Visualization
 
-Training and validation loss curves were plotted to analyze the learning behavior of the neural network and confirm stable training without significant overfitting.
+Training and validation loss curves were plotted to analyze the learning behavior of the neural network and ensure stable training without significant overfitting.
+
+---
 
 ### 7. Model Deployment
 
-The trained model was saved using the native **Keras (.keras) format** and deployed locally using **Streamlit**.
+The trained model was saved using the native **Keras (.keras)** format and deployed locally using **Streamlit**.
 
-The web application allows users to input interaction details and receive a predicted CSAT score in real time.
+The web application allows users to input customer support interaction details and obtain predicted CSAT scores instantly.
 
 ---
 
@@ -112,52 +144,93 @@ The web application allows users to input interaction details and receive a pred
 ## Project Structure
 
 ```
-CSAT_Prediction_App
+CSAT-Prediction
 │
-├── app.py
-├── csat_ann_model.keras
-├── scaler.pkl
+├── Notebook
+│   └── CSAT_Prediction_Project.ipynb
+│
+├── Deployment
+│   ├── app.py
+│   ├── csat_ann_model.keras
+│   ├── scaler.pkl
+│
+├── Dataset
+│   └── eCommerce_Customer_support_data.csv
+│
 ├── requirements.txt
+├── README.md
+└── .gitignore
 ```
+
+### Folder Description
+
+**Notebook/**
+Contains the Jupyter notebook used for data exploration, preprocessing, model training, and evaluation.
+
+**Deployment/**
+Contains files required to run the Streamlit application for CSAT prediction.
+
+**Dataset/**
+Contains the dataset used for model training.
+
+**requirements.txt**
+Lists all required Python libraries.
+
+**README.md**
+Provides project documentation.
 
 ---
 
 ## How to Run the Project
 
-### Install Dependencies
+### 1. Clone the Repository
+
+```
+git clone https://github.com/hubsukalp/CSAT-Prediction.git
+```
+
+---
+
+### 2. Install Dependencies
 
 ```
 pip install -r requirements.txt
 ```
 
-### Run the Application
+---
+
+### 3. Run the Streamlit Application
 
 ```
-streamlit run app.py
+streamlit run deployment/app.py
 ```
 
-The application will open in your browser at:
+---
+
+### 4. Open the Web Application
+
+After running the command above, open the following URL in your browser:
 
 ```
 http://localhost:8501
 ```
 
+You will see the **CSAT Prediction Interface**, where you can input interaction details and receive predicted satisfaction scores.
+
 ---
 
 ## Results
 
-The deployed application allows users to input encoded interaction parameters and obtain predicted customer satisfaction scores instantly.
+The deployed application demonstrates how machine learning can assist organizations in predicting customer satisfaction levels based on operational support data.
 
-This demonstrates how deep learning models can assist organizations in **analyzing customer support performance and improving decision-making**.
+The model successfully learns patterns from historical support interactions and provides real-time predictions through the Streamlit interface.
 
 ---
 
 ## Conclusion
 
-This project demonstrates the practical application of deep learning techniques in predicting customer satisfaction for e-commerce support systems. By analyzing operational parameters from customer interactions, the ANN model can provide useful insights into factors affecting customer satisfaction.
+This project demonstrates the practical application of deep learning techniques for predicting customer satisfaction in e-commerce customer support systems. By analyzing operational parameters such as communication channels, issue categories, and agent information, the ANN model can provide valuable insights into customer satisfaction trends.
 
-The deployed application provides an interactive interface for real-time CSAT prediction, showcasing the potential of machine learning in enhancing customer service analytics.
+The deployed Streamlit application enables real-time prediction of CSAT scores, showcasing how machine learning can be integrated into customer support analytics to improve decision-making and service quality.
 
 ---
-
-
